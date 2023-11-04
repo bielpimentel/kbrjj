@@ -99,9 +99,11 @@
   <div class="d-flex justify-content-between mb-4">
     <h1 class="h3">Torneios registrados</h1>
 
+    @can('admin')
     <div class="d-flex gap-2">
       <a href="/painel/registro_torneio" class="btn btn-light">+ Cadastrar Torneio</a>
     </div>
+    @endcan
   </div>
 
   @if(session('msg'))
@@ -304,6 +306,7 @@
               </div>
             </div>
 
+            @can('admin')
             <div class="col-6">
               <div><small style="text-decoration: underline">Data de Registro:</small></div>
               <div style="color: orange">{{ date('d/m/Y, H:i:s', strtotime($torneio->created_at)) }}</div>
@@ -313,7 +316,8 @@
               <div><small style="text-decoration: underline">Última Alteração:</small></div>
               <div style="color: orange">{{ date('d/m/Y, H:i:s', strtotime($torneio->updated_at)) }}</div>
             </div>
-
+            @endcan
+            
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>

@@ -1,6 +1,8 @@
 @extends('layouts.painel-main')
 
-@section('user', 'Admin')
+@section('user')
+  {{ auth()->user()->name }}
+@endsection
 
 
 @section('op') {{-- OPÇÕES DO MENU LATERAL (INCÍCIO) --}}
@@ -19,8 +21,10 @@
         <a href="/painel/dashboard" class="submenu-link link-light text-decoration-none rounded p-2">
           <small class="d-flex justify-content-between align-items-center">
             Listagem
+
           </small>
         </a>
+        @can('admin')
         <a href="/painel/registro_torneio" class="submenu-link link-light text-decoration-none rounded p-2">
           <small class="d-flex justify-content-between align-items-center">
             Cadastrar
@@ -31,6 +35,7 @@
             Destaques
           </small>
         </a>
+        @endcan
       </div>
     </div>
   </div>
@@ -59,6 +64,7 @@
     </div>
   </div>
   {{-- MENU USUÁRIOS --}}
+  @can('admin')
   <div class="item">
     <div class="w-100 d-flex align-items-center gap-2 link-light text-decoration-none mt-2 py-3 px-3 border-start border-light border-4" type="button" data-bs-toggle="collapse" data-bs-target="#menu-usuario" aria-expanded="true" aria-controls="menu-usuario">
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
@@ -83,4 +89,6 @@
       </div>
     </div>
   </div>
+  @endcan
+  
 @endsection {{-- OPÇÕES DO MENU LATERAL (FIM) --}}

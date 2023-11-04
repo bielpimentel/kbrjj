@@ -1,6 +1,8 @@
 @extends('layouts.painel-main')
 
-@section('user', 'Admin')
+@section('user')
+  {{ auth()->user()->name }}
+@endsection
 
 
 @section('op') {{-- OPÇÕES DO MENU LATERAL (INCÍCIO) --}}
@@ -14,20 +16,16 @@
         Torneios
     </div>
 
-    <div class="collapse show" id="menu-torneios">
+    <div class="collapse" id="menu-torneios">
       <div class="bg-dark d-flex flex-column rounded mx-4 p-2 row-gap-1">
         <a href="/painel/dashboard" class="submenu-link link-light text-decoration-none rounded p-2">
           <small class="d-flex justify-content-between align-items-center">
             Listagem
           </small>
         </a>
-        <a href="/painel/registro_torneio" class="submenu-link link-light text-decoration-none rounded p-2 active">
+        <a href="/painel/registro_torneio" class="submenu-link link-light text-decoration-none rounded p-2">
           <small class="d-flex justify-content-between align-items-center">
             Cadastrar
-            
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
-              <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
-            </svg>
           </small>
         </a>
         <a href="/painel/destaques" class="submenu-link link-light text-decoration-none rounded p-2">
