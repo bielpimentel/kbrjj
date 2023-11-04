@@ -114,6 +114,15 @@
     <h1 class="h3">Registrar Torneio</h1>
   </div>
 
+
+  @if($errors->any())
+    <ul class="d-flex flex-column">
+      @foreach($errors->all() as $error)
+        <li style="color: orange">{{ $error }}</li>
+      @endforeach
+    </ul>
+  @endif
+
   {{-- forms --}}
   <form action="/painel/registro_torneio" method="POST" enctype="multipart/form-data" class="bg-custom rounded col-12 py-3 px-4">
 

@@ -16,11 +16,37 @@ class AdmController extends Controller
     // ---------- TORNEIOS ---------- //
     public function dashboard(){
 
-        $dadosTorneio = Torneio::paginate(10);
-        $dadosAtleta = Atleta::all();
-        $dadosUsuario = Usuario::all();
+        $titulo = request('titulo');
+        $fase = request('fase');
+        $estado = request('estado');
+        $de = request('de');
+        $ate = request('ate');
 
-        return view('painel.dashboard-adm', ['torneios' => $dadosTorneio, 'atletas' => $dadosAtleta, 'usuarios' => $dadosUsuario]);
+        $query = Torneio::query();
+
+        if($titulo || $fase || $estado || $de || $ate){
+            
+            $query->where('titulo', 'LIKE', "%{$titulo}%");
+            $query->where('fase', 'LIKE', "%{$fase}%");
+            $query->where('estado', 'LIKE', "%{$estado}%");
+            if($de){
+                $query->where('data', '>=', "{$de}");
+            }
+            if($ate){
+                $query->where('data', '<=', "{$ate}");
+            }
+        }
+        
+        $dadosTorneio = $query->paginate(4);
+
+        return view('painel.dashboard-adm', [
+            'torneios' => $dadosTorneio, 
+            'titulo' => $titulo, 
+            'fase' => $fase, 
+            'estado' => $estado, 
+            'de' => $de,
+            'ate' => $ate,
+        ]);
     }
 
     public function cadastroTorneio(){
@@ -32,6 +58,33 @@ class AdmController extends Controller
     }
 
     public function store(Request $request, Torneio $torneio){
+
+        $request->validate([
+            'titulo' => 'required',
+            'cidade' => 'required',
+            'estado' => 'required',
+            'data' => 'required|after:today',
+            'sobre' => 'required',
+            'ginasio' => 'required',
+            'infos_gerais' => 'required',
+            'tipo' => 'required',
+            'fase' => 'required',
+            'status' => 'required',
+            'imagem' => 'required',
+        ], [
+            'titulo.required' => 'Campo título é obrigatório!',
+            'cidade.required' => 'Campo cidade é obrigatório!',
+            'estado.required' => 'Campo Estado é obrigatório!',
+            'data.required' => 'Campo data é obrigatório!',
+            'data.after' => 'Data inválida!',
+            'sobre.required' => 'Campo sobre é obrigatório!',
+            'ginasio.required' => 'Campo ginásio é obrigatório!',
+            'infos_gerais.required' => 'Campo de informações gerais é obrigatório!',
+            'tipo.required' => 'Campo tipo é obrigatório!',
+            'fase.required' => 'Campo fase é obrigatório!',
+            'status.required' => 'Campo status é obrigatório!',
+            'imagem.required' => 'Campo imagem é obrigatório!',
+        ]);
 
         $torneio->titulo = $request->titulo;
         $torneio->cidade = $request->cidade;

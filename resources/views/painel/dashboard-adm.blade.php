@@ -100,7 +100,7 @@
     <h1 class="h3">Torneios registrados</h1>
 
     <div class="d-flex gap-2">
-      <a href="cadastrar.html" class="btn btn-light">+ Cadastrar Torneio</a>
+      <a href="/painel/registro_torneio" class="btn btn-light">+ Cadastrar Torneio</a>
     </div>
   </div>
 
@@ -112,13 +112,13 @@
 
   {{-- filtros --}}
   <div class="d-flex justify-content-between align-items-end mb-3">
-    <form action="" class="bg-custom rounded col-12 py-3 px-4">
+    <form action="/painel/dashboard" method="GET" class="bg-custom rounded col-12 py-3 px-4">
         
       <div class="row align-items-end row-gap-4">
         <div class="col-3 d-flex flex-wrap">
-          <label for="search" class="col-form-label">Buscar:</label>
+          <label for="titulo" class="col-form-label">Título:</label>
           <div class="col-12">
-            <input type="text" class="form-control bg-dark text-light border-dark" id="search" placeholder="Busca por título">
+            <input type="text" class="form-control bg-dark text-light border-dark" id="titulo" name="titulo" placeholder="Busca por título">
           </div>
         </div>
 
@@ -127,20 +127,45 @@
           <div class="col-12">
             <select name="fase" class="form-control bg-dark text-light border-dark form-select" id="fase">
               <option value="" disabled selected>Selecione</option>
-              <option value="ativo">Inscrições</option>
-              <option value="inativo">Chaveamento</option>
-              <option value="inativo">Resultados</option>
+              <option value="Inscrições Abertas">Inscrições</option>
+              <option value="Chaveamento">Chaveamento</option>
+              <option value="Resultados">Resultados</option>
             </select>
           </div>
         </div>
 
         <div class="col-2 d-flex flex-wrap">
-          <label for="status" class="col-form-label">Status:</label>
+          <label for="estado" class="col-form-label">Estado:</label>
           <div class="col-12">
-            <select name="status" class="form-control bg-dark text-light border-dark form-select" id="status">
+            <select name="estado" class="form-control bg-dark text-light border-dark form-select" id="estado">
               <option value="" disabled selected>Selecione</option>
-              <option value="ativo">Ativo</option>
-              <option value="inativo">Inativo</option>
+              <option value="AC">Acre</option>
+              <option value="AL">Alagoas</option>
+              <option value="AP">Amapá</option>
+              <option value="AM">Amazonas</option>
+              <option value="BA">Bahia</option>
+              <option value="CE">Ceará</option>
+              <option value="DF">Distrito Federal</option>
+              <option value="ES">Espírito Santo</option>
+              <option value="GO">Goiás</option>
+              <option value="MA">Maranhão</option>
+              <option value="MT">Mato Grosso</option>
+              <option value="MS">Mato Grosso do Sul</option>
+              <option value="MG">Minas Gerais</option>
+              <option value="PA">Pará</option>
+              <option value="PB">Paraíba</option>
+              <option value="PR">Paraná</option>
+              <option value="PE">Pernambuco</option>
+              <option value="PI">Piauí</option>
+              <option value="RJ">Rio de Janeiro</option>
+              <option value="RN">Rio Grande do Norte</option>
+              <option value="RS">Rio Grande do Sul</option>
+              <option value="RO">Rondônia</option>
+              <option value="RR">Roraima</option>
+              <option value="SC">Santa Catarina</option>
+              <option value="SP">São Paulo</option>
+              <option value="SE">Sergipe</option>
+              <option value="TO">Tocantins</option>
             </select>
           </div>
         </div>
@@ -150,12 +175,12 @@
 
           <div class="col-6 d-flex gap-2">
             <label for="de" class="col-form-label">De:</label>
-            <input type="date" class="form-control bg-dark text-light border-dark" id="de" placeholder="27/10/2023">
+            <input type="date" class="form-control bg-dark text-light border-dark" id="de" name="de">
           </div>
 
           <div class="col-6 d-flex gap-2">
             <label for="ate" class="col-form-label">Até:</label>
-            <input type="date" class="form-control bg-dark text-light border-dark" id="ate" placeholder="27/10/2023">
+            <input type="date" class="form-control bg-dark text-light border-dark" id="ate" name="ate">
           </div>
         </div>
             
@@ -226,7 +251,13 @@
   </div>
 
   <div class="pagination justify-content-end pt-4 pb-2">
-    {{ $torneios->links('pagination::bootstrap-4') }}
+    {{ $torneios->appends([
+      'titulo' => request()->get('titulo', ''),
+      'fase' => request()->get('fase', ''),
+      'estado' => request()->get('estado', ''),
+      'de' => request()->get('de', ''),
+      'ate' => request()->get('ate', ''),
+    ])->links('pagination::bootstrap-4') }}
   </div>
 
 @endsection

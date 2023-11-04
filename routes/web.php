@@ -20,13 +20,13 @@ use App\Http\Controllers\PainelController;
 
 /* ---------- ÁREA PÚBLICA ---------- */
 
-Route::get('/site/torneios', [TournamentController::class, 'torneios']); //---check---
-Route::get('/site/resultados', [TournamentController::class, 'resultados']); //---check---
-Route::get('/site/integra/{id}={titulo}', [TournamentController::class, 'integra']); //---check---
-Route::get('/site/inscricao', [TournamentController::class, 'inscricao']); //---check---
-Route::get('/site/chave_integra', [TournamentController::class, 'chave_integra']); //---check---
+Route::get('/site/torneios', [TournamentController::class, 'torneios']);
+Route::get('/site/resultados', [TournamentController::class, 'resultados']);
+Route::get('/site/integra/{id}={titulo}', [TournamentController::class, 'integra']);
+Route::get('/site/inscricao', [TournamentController::class, 'inscricao']);
+Route::get('/site/chave_integra', [TournamentController::class, 'chave_integra']);
 Route::get('/site/chave_listagem', [TournamentController::class, 'chave_listagem']); 
-Route::get('/', [TournamentController::class, 'index']); //---check---
+Route::get('/', [TournamentController::class, 'index']);
 
 /* ---------- ÁREA ATLETA ---------- */
 
