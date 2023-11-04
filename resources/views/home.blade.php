@@ -6,6 +6,12 @@
 
   <main>
 
+    @if(session('msg'))
+      <div style="text-align: center; margin: 0 auto; max-width: 450px" class="bg-green-100 border border-green-400 text-green-700 px-4 py-2 rounded relative" role="alert">
+        <p>{{ session('msg') }}</p>
+      </div>
+    @endif
+
     <section aria-labelledby="banner_title" class="h-[600px] relative">
       <img
         src="imgs/banner.jpg"

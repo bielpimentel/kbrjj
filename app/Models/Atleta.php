@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Atleta extends Model
 {
     use HasFactory;
+
+    public function torneios() {
+        return $this->belongsToMany('App\Models\Torneio');
+    }
 }

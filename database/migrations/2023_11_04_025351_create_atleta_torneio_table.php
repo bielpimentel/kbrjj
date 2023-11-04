@@ -13,13 +13,13 @@ return new class extends Migration
     {
         Schema::create('atleta_torneio', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_atleta');
-            $table->foreign('id_atleta')
+            $table->unsignedBigInteger('atleta_id');
+            $table->foreign('atleta_id')
                 ->references('id')
                 ->on('atletas')
                 ->onDelete('cascade');
-            $table->unsignedBigInteger('id_torneio');
-            $table->foreign('id_torneio')
+            $table->unsignedBigInteger('torneio_id');
+            $table->foreign('torneio_id')
                 ->references('id')
                 ->on('torneios')
                 ->onDelete('cascade');

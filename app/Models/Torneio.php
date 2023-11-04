@@ -10,4 +10,8 @@ class Torneio extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    public function atletas() {
+        return $this->belongsToMany('App\Models\Atleta');
+    }
 }

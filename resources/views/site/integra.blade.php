@@ -184,7 +184,7 @@
       @else
       <div class="mt-8 flex justify-center">
         <a
-          href="/site/inscricao"
+          href="/site/inscricao/{{ $torneios->id }}"
           class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-lg px-5 py-2.5 mr-2 mb-2 focus:outline-none"
         >
           Inscreva-se agora mesmo
