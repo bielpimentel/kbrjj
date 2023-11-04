@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Torneio;
 use App\Models\Atleta;
-use App\Models\Usuario;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Auth;
 use Intervention\Image\ImageManagerStatic as Image;
@@ -52,9 +51,8 @@ class AdmController extends Controller
     public function cadastroTorneio(){
 
         $dadosTorneio = Torneio::all();
-        $dadosUsuario = Usuario::all();
 
-        return view('painel.cadastro-torneio', ['torneios' => $dadosTorneio, 'usuarios' => $dadosUsuario]);
+        return view('painel.cadastro-torneio', ['torneios' => $dadosTorneio]);
     }
 
     public function store(Request $request, Torneio $torneio){
@@ -158,9 +156,8 @@ class AdmController extends Controller
     public function destaques(){
 
         $dadosTorneio = Torneio::all();
-        $dadosUsuario = Usuario::all();
 
-        return view('painel.destaques', ['torneios' => $dadosTorneio, 'usuarios' => $dadosUsuario]);
+        return view('painel.destaques', ['torneios' => $dadosTorneio]);
     }
 
     // ---------- ATLETAS ---------- //
@@ -168,24 +165,20 @@ class AdmController extends Controller
 
         $dadosTorneio = Torneio::all();
         $dadosAtleta = Atleta::all();
-        $dadosUsuario = Usuario::all();
 
-        return view('painel.lista-atletas', ['torneios' => $dadosTorneio, 'atletas' => $dadosAtleta, 'usuarios' => $dadosUsuario]);
+        return view('painel.lista-atletas', ['torneios' => $dadosTorneio, 'atletas' => $dadosAtleta]);
     }
 
     // ---------- USUÁRIOS ---------- //
     public function users(){
 
-        $dadosUsuario = Usuario::all();
-
-        return view('painel.users', ['usuarios' => $dadosUsuario]);
+        return view('painel.users');
     }
 
     public function cadastroUser(){
 
-        $dadosUsuario = Usuario::all();
 
-        return view('painel.cadastro-users', ['usuarios' => $dadosUsuario]);
+        return view('painel.cadastro-users');
     }
 
 }

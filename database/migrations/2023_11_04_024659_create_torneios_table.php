@@ -25,8 +25,7 @@ return new class extends Migration
             $table->string('tipo');
             $table->string('fase');
             $table->boolean('status');
-            $table->timestamps('updated_at');
-            $table->timestamps('created_at');
+            $table->timestamps();
         });
     }
 

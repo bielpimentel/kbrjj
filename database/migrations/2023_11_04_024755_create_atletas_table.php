@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('equipe');
             $table->string('faixa');
             $table->string('peso');
-            $table->timestamps('data_inscricao');
+            $table->timestamps();
         });
     }
 

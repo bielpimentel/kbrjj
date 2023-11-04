@@ -18,6 +18,7 @@ return new class extends Migration
                 ->references('id')
                 ->on('atletas')
                 ->onDelete('cascade');
+            $table->unsignedBigInteger('id_torneio');
             $table->foreign('id_torneio')
                 ->references('id')
                 ->on('torneios')
