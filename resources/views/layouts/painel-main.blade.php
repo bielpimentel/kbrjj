@@ -8,6 +8,8 @@
     <link rel="icon" type="image/x-icon" href="/img/favicon.ico">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
     <link href="/css/style.css" rel="stylesheet">
+    @yield('crop-head')
+
 </head>
 <body class="bg-dark h-100">
     <header class="bg-light py-2 shadow">
@@ -89,5 +91,8 @@
   @yield('modals')
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+
+  @yield('crop-modal')
+  
 </body>
 </html>

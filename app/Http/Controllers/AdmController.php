@@ -8,6 +8,7 @@ use App\Models\Atleta;
 use App\Models\Usuario;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Auth;
+use Intervention\Image\ImageManagerStatic as Image;
 
 class AdmController extends Controller
 {

@@ -260,7 +260,12 @@
 
   <nav aria-label="Paginação torneios">
     <div class="mt-8 -space-x-px text-lg flex justify-center">
-      {{ $torneios->links() }}
+      {{ $torneios->appends([
+        'titulo' => request()->get('titulo', ''),
+        'tipo' => request()->get('tipo', ''),
+        'estado' => request()->get('estado', ''),
+        'cidade' => request()->get('cidade', ''),
+      ])->links() }}
     </div>
   </nav>
 @endsection

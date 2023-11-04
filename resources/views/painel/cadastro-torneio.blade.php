@@ -1,5 +1,26 @@
 @extends('layouts.painel-main')
 
+@section('crop-head')
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css">
+  <style>
+    .modal-dialog {
+      max-width: 100%;
+      margin: 1rem;
+    }
+
+    .img-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 500px;
+      background-color: #f7f7f7;
+      overflow: hidden;
+    }
+  </style>
+@endsection
+
 @section('user', 'Admin')
 
 
@@ -107,7 +128,7 @@
     <div class="mb-3 row">
       <label for="imagem" class="col-sm-2 col-form-label">Imagem do torneio:</label>
       <div class="col-sm-10">
-        <input type="file" class="form-control-file" id="imagem" name="imagem" style="color: rgb(240, 206, 145)">
+        <input type="file" class="form-control-file" id="imagem" name="imagem" style="color: rgb(240, 206, 145)" accept="image/*">
       </div>
     </div>
     
@@ -228,4 +249,111 @@
     </div>
   </form>
 
+@endsection
+
+
+@section('crop-modal')
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script> --}}
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
+
+  <script>
+    $(document).ready(function() {
+        let cropper;
+        let croppedImageDataURL;
+
+        // Initialize the Cropper.js instance when the modal is shown
+        $('#cropImageModal').on('shown.bs.modal', function() {
+            cropper = new Cropper($('#imageToCrop')[0], {
+                aspectRatio: 1 / 1,
+                viewMode: 1,
+                autoCropArea: 0.8,
+            });
+        });
+
+        // Destroy the Cropper.js instance when the modal is hidden
+        $('#cropImageModal').on('hidden.bs.modal', function() {
+            cropper.destroy();
+            cropper = null;
+        });
+
+        // Show the image cropping modal when an image is selected
+        $('#image').on('change', function(event) {
+            const file = event.target.files[0];
+            const fileReader = new FileReader();
+
+            fileReader.onload = function(e) {
+                $('#imageToCrop').attr('src', e.target.result);
+                $('#cropImageModal').modal('show');
+            };
+
+            fileReader.readAsDataURL(file);
+        });
+
+        // Handle the "Crop and Upload" button click
+        $('#cropAndUpload').on('click', function() {
+            croppedImageDataURL = cropper.getCroppedCanvas().toDataURL();
+            uploadCroppedImage();
+            $('#cropImageModal').modal('hide');
+        });
+
+        // Upload the cropped image to the server
+        function uploadCroppedImage() {
+            const formData = new FormData();
+            formData.append('_token', $('input[name=_token]').val());
+            formData.append('image', dataURLtoFile(croppedImageDataURL, 'cropped-image.png'));
+
+            $.ajax({
+                url: '/painel/registro_torneio',
+                method: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    // Handle the server response, e.g., display the cropped image
+                },
+                error: function(xhr, status, error) {
+                    // Handle errors
+                },
+            });
+        }
+
+        // Helper function to convert a data URL to a File object
+        function dataURLtoFile(dataURL, filename) {
+            const arr = dataURL.split(',');
+            const mime = arr[0].match(/:(.*?);/)[1];
+            const bstr = atob(arr[1]);
+            let n = bstr.length;
+            const u8arr = new Uint8Array(n);
+
+            while (n--) {
+                u8arr[n] = bstr.charCodeAt(n);
+            }
+
+            return new File([u8arr], filename, { type: mime });
+        }
+    });
+  </script>
+
+  <div class="modal fade" id="cropImageModal" tabindex="-1" aria-labelledby="cropImageModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="cropImageModalLabel">Crop Image</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="img-container">
+            <img id="imageToCrop" src="#" alt="Image to crop">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary" id="cropAndUpload">Crop and Upload</button>
+        </div>
+      </div>
+    </div>
+  </div>
 @endsection
