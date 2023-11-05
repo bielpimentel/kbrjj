@@ -221,11 +221,13 @@
             type="text"
             id="equipe"
             name="equipe"
-            class="bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+            class="bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mb-10"
             placeholder="Sua equipe"
           />
         </div>
       </div>
+
+      <p style="color: rgb(47, 88, 177)" class="block mb-2 text-lg font-medium">OBS: Seu e-mail e senha de acesso às informações do torneio serão os mesmos do seu login</p>
 
       <div class="mt-8 flex justify-center">
         <button

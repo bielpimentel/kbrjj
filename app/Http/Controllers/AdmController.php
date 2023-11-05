@@ -174,10 +174,21 @@ class AdmController extends Controller
     // ---------- ATLETAS ---------- //
     public function listaAtletas(){
 
-        $dadosTorneio = Torneio::all();
-        $dadosAtleta = Atleta::all();
+        $nome = request('nome');
+        $email = request('email');
 
-        return view('painel.lista-atletas', ['torneios' => $dadosTorneio, 'atletas' => $dadosAtleta]);
+        $query = Atleta::query();
+
+        if($nome || $email){
+            
+            $query->where('nome', 'LIKE', "%{$nome}%");
+            $query->where('email', 'LIKE', "%{$email}%");
+            
+        }
+        
+        $dadosAtleta = $query->paginate(4);
+
+        return view('painel.lista-atletas', ['atletas' => $dadosAtleta]);
     }
 
     // ---------- USUÁRIOS ---------- //
