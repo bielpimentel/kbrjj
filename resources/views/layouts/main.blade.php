@@ -86,19 +86,44 @@
               <li>
                 <a
                   href="/site/torneios"
-                  class="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0"
+                  class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0"
                   aria-current="page"
                   >Torneios</a
                 >
-              </li>
+              </li>          
+              @can('admin')
               <li>
                 <a
-                  href="./area_atleta/area_restrita.html"
+                  href="/painel/dashboard"
+                  class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0"
+                  aria-current="page"
+                  >Painel</a
+                >
+              </li> 
+              @endcan
+              <li>
+                <a
+                  href="/login"
                   class="text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-2.5 text-center"
                 >
                   Área do competidor
                 </a>
               </li>
+              @auth
+                <li>
+                  <form action="/logout" method="POST">
+                    @csrf
+                    <a
+                      href="{{ route('logout') }}"
+                      onclick="event.preventDefault();
+                      this.closest('form').submit();"
+                      class="text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-6 py-2.5 text-center"
+                    >
+                      Sair
+                    </a>
+                  </form>
+                </li>
+              @endauth
             </ul>
           </div>
         </div>

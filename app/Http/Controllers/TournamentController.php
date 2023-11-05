@@ -6,6 +6,7 @@ use App\Class\Calendario;
 use App\Models\Atleta;
 use Illuminate\Http\Request;
 use App\Models\Torneio;
+use Illuminate\Support\Facades\DB;
 
 class TournamentController extends Controller
 {
@@ -38,9 +39,7 @@ class TournamentController extends Controller
         $estado = request('estado');
         $cidade = request('cidade');
 
-        $query = Torneio::query()
-            ->where('status', '=', 1)
-        ;
+        $query = Torneio::query()->where('status', '=', 1);
 
         if($titulo || $tipo || $estado || $cidade){
             $query->where('titulo', 'LIKE', "%{$titulo}%");
@@ -82,25 +81,21 @@ class TournamentController extends Controller
         return view('site.inscricao', ['torneio' => $dadosTorneio]);
     }
 
-    public function storeInscricao($id, Request $request, Atleta $atleta){
+    public function storeInscricao($id, Request $request){
 
         Torneio::findOrFail($id);
-
-        $email = auth()->user()->email;
-        $password = auth()->user()->password;
 
         $request->validate([
             'nome' => 'required',
             'nascimento' => 'required|before:today',
-            'cpf' => 'required|unique:atletas,cpf',
+            'cpf' => 'required',
             'sexo' => 'required',
             'equipe' => 'required',
             'faixa' => 'required',
             'peso' => 'required',
-        ], [
+            ], [
             'nome.required' => 'Campo nome é obrigatório!',
             'cpf.required' => 'Campo CPF é obrigatório!',
-            'cpf.unique' => 'CPF já cadastrado!',
             'nascimento.required' => 'Campo data é obrigatório!',
             'nascimento.before' => 'Data inválida!',
             'sexo.required' => 'Campo sexo é obrigatório!',
@@ -109,27 +104,42 @@ class TournamentController extends Controller
             'peso.required' => 'Campo peso é obrigatório!',
         ]);
 
-        $checaEmail = Atleta::where('email', $email)->first();
+        $user = auth()->user();
+        $userEmail = $user->email;
+        $userPassword = $user->password;
 
-        if ($checaEmail) {
-            return redirect()->back()->with('msg', 'Você já possui um cadastro ativo neste torneio com essa conta!');
-        }
+        $atletaCadastrado = Atleta::where('email', $userEmail)->first();
+        
+        if ($atletaCadastrado) {
 
-        $atleta->nome = $request->nome;
-        $atleta->nascimento = $request->nascimento;
-        $atleta->cpf = $request->cpf;
-        $atleta->sexo = $request->sexo;
-        $atleta->email = $email;
-        $atleta->senha = $password;
-        $atleta->equipe = $request->equipe;
-        $atleta->faixa = $request->faixa;
-        $atleta->peso = $request->peso;
-
-        $atleta->save();
-
-        $atletaInscrito = Atleta::where('cpf', $request->cpf)->first();
-        $atletaInscrito->torneios()->attach($id);
-
+            $atletaInscrito = DB::table('atleta_torneio')->where('atleta_id', $atletaCadastrado->id)->where('torneio_id', $id)->exists();
+            
+            if ($atletaInscrito ) {
+                return redirect()->back()->with('msg', 'Você já está inscrito neste torneio.');
+            }
+        } else {
+            
+            $request->validate([
+                'cpf' => 'unique:atletas,cpf',
+                ], [
+                'cpf.unique' => 'CPF já cadastrado como atleta!'
+            ]);
+    
+            $atleta = new Atleta();
+            $atleta->nome = $request->nome;
+            $atleta->nascimento = $request->nascimento;
+            $atleta->cpf = $request->cpf;
+            $atleta->sexo = $request->sexo;
+            $atleta->email = $userEmail;
+            $atleta->senha = $userPassword;
+            $atleta->equipe = $request->equipe;
+            $atleta->save();
+            
+            $atletaCadastrado = $atleta;
+        }       
+    
+        $atletaCadastrado->torneios()->attach($id);
+    
         return redirect('/')->with('msg', 'Inscrição realizada com sucesso! Acesse a área do competidor para saber mais detalhes');
     }
 

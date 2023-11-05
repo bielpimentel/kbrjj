@@ -57,6 +57,17 @@ class AdmController extends Controller
 
     public function store(Request $request, Torneio $torneio){
 
+        $query = Torneio::where('titulo', $request->titulo)
+                ->where('cidade', $request->cidade)
+                ->where('estado', $request->estado)
+                ->where('ginasio', $request->ginasio)
+                ->where('data', $request->data)
+                ->first();
+
+        if ($query){
+            return redirect()->back()->with('msg', 'Este torneio já está registrado!');
+        }
+
         $request->validate([
             'titulo' => 'required',
             'cidade' => 'required',

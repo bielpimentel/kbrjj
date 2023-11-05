@@ -114,6 +114,11 @@
     <h1 class="h3">Registrar Torneio</h1>
   </div>
 
+  @if(session('msg'))
+    <div class="msgErro">
+      <p>{{ session('msg') }}</p>
+    </div>
+  @endif
 
   @if($errors->any())
     <ul class="d-flex flex-column">
