@@ -92,7 +92,7 @@
   </div>
 
   {{-- forms --}}
-  <form action="/painel/edicao_torneio/{{$torneio->id}}" method="POST" enctype="multipart/form-data" class="bg-custom rounded col-12 py-3 px-4">
+  <form action="/painel/edicao_torneio/{{ $torneio->id }}" method="POST" enctype="multipart/form-data" class="bg-custom rounded col-12 py-3 px-4">
 
     @csrf
     @method('PUT')

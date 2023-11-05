@@ -21,7 +21,9 @@
   </style>
 @endsection
 
-@section('user', 'Admin')
+@section('user')
+  {{ auth()->user()->name }}
+@endsection
 
 
 @section('op') {{-- OPÇÕES DO MENU LATERAL (INCÍCIO) --}}

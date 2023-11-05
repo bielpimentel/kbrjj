@@ -107,9 +107,17 @@
   </div>
 
   @if(session('msg'))
-    <div class="msgSucesso">
+    <div class="msgErro">
       <p>{{ session('msg') }}</p>
     </div>
+  @endif
+
+  @if($errors->any())
+    <ul class="d-flex flex-column">
+      @foreach($errors->all() as $error)
+        <li style="color: orange">{{ $error }}</li>
+      @endforeach
+    </ul>
   @endif
 
   {{-- filtros --}}

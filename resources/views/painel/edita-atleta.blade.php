@@ -21,10 +21,8 @@
         <a href="/painel/dashboard" class="submenu-link link-light text-decoration-none rounded p-2">
           <small class="d-flex justify-content-between align-items-center">
             Listagem
-
           </small>
         </a>
-        @can('admin')
         <a href="/painel/registro_torneio" class="submenu-link link-light text-decoration-none rounded p-2">
           <small class="d-flex justify-content-between align-items-center">
             Cadastrar
@@ -35,7 +33,6 @@
             Destaques
           </small>
         </a>
-        @endcan
       </div>
     </div>
   </div>
@@ -60,7 +57,6 @@
     </div>
   </div>
   {{-- MENU USUÁRIOS --}}
-  @can('admin')
   <div class="item">
     <div class="w-100 d-flex align-items-center gap-2 link-light text-decoration-none mt-2 py-3 px-3 border-start border-light border-4" type="button" data-bs-toggle="collapse" data-bs-target="#menu-usuario" aria-expanded="true" aria-controls="menu-usuario">
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
@@ -70,94 +66,86 @@
         Usuários
     </div>
 
-    <div class="collapse show" id="menu-usuario">
+    <div class="collapse" id="menu-usuario">
       <div class="bg-dark d-flex flex-column rounded mx-4 p-2 row-gap-1">
         <a href="/painel/users" class="submenu-link link-light text-decoration-none rounded p-2">
           <small class="d-flex justify-content-between align-items-center">
             Listagem
           </small>
         </a>
-        <a href="/painel/cadastro" class="submenu-link link-light text-decoration-none rounded p-2 active">
+        <a href="/painel/cadastro" class="submenu-link link-light text-decoration-none rounded p-2">
           <small class="d-flex justify-content-between align-items-center">
             Cadastrar
-            
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
-              <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
-            </svg>
           </small>
         </a>
       </div>
     </div>
   </div>
-  @endcan
 @endsection {{-- OPÇÕES DO MENU LATERAL (FIM) --}}
+
 
 @section('main')
 
   {{-- cabeçalho --}}
   <div class="d-flex justify-content-between mb-4">
-    <h1 class="h3">Registrar usuário</h1>
+    <h1 class="h3">Editar atleta: <span style="color: yellow">{{ $atleta->nome }}</span></h1>
   </div>
 
-  @if(session('msg'))
-    <div class="msgErro">
-      <p>{{ session('msg') }}</p>
-    </div>
-  @endif
-
-  @if($errors->any())
-    <ul class="d-flex flex-column">
-      @foreach($errors->all() as $error)
-        <li style="color: orange">{{ $error }}</li>
-      @endforeach
-    </ul>
-  @endif
-
   {{-- forms --}}
-  <form action="/painel/cadastro" method="POST" class="bg-custom rounded col-12 py-3 px-4">
+  <form action="/painel/edicao_atleta/{{$atleta->id}}" method="POST" class="bg-custom rounded col-12 py-3 px-4">
 
     @csrf
+    @method('PUT')
     <div class="mb-3 row">
-      <label for="name" class="col-sm-2 col-form-label">Nome:</label>
+      <label for="nome" class="col-sm-2 col-form-label">Nome:</label>
       <div class="col-sm-10">
-        <input type="text" class="form-control bg-dark text-light border-dark" id="name" name="name" placeholder="Nome do usuário">
+        <input type="text" class="form-control bg-dark text-light border-dark" id="nome" name="nome" placeholder="Nome do atleta" value="{{ $atleta->nome }}">
       </div>
     </div>
     
     <div class="mb-3 row">
-      <label for="email" class="col-sm-2 col-form-label">E-mail:</label>
+      <label for="email" class="col-sm-2 col-form-label">Email:</label>
       <div class="col-sm-10">
-        <input type="text" class="form-control bg-dark text-light border-dark" id="email" name="email" placeholder="example@kbrtec.com.br">
+        <input type="text" class="form-control bg-dark text-light border-dark" id="email" name="email" placeholder="Email do atleta" value="{{ $atleta->email }}">
       </div>
     </div>
 
     <div class="mb-3 row">
-      <label for="is_admin" class="col-sm-2 col-form-label">Privilégio:</label>
+      <label for="nascimento" class="col-sm-2 col-form-label">Data de nascimento:</label>
       <div class="col-sm-3">
-        <select name="is_admin" class="form-control bg-dark text-light border-dark form-select" id="is_admin">
+        <input type="date" class="form-control bg-dark text-light border-dark" id="nascimento" name="nascimento" value="{{ date('Y-m-d', strtotime($atleta->nascimento)) }}">
+      </div>
+    </div>
+
+    <div class="mb-3 row">
+      <label for="equipe" class="col-sm-2 col-form-label">Equipe:</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control bg-dark text-light border-dark" id="equipe" name="equipe" value="{{ $atleta->equipe }}">
+      </div>
+    </div>
+
+
+    <div class="mb-3 row">
+      <label for="cpf" class="col-sm-2 col-form-label">CPF:</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control bg-dark text-light border-dark" id="cpf" name="cpf" value="{{ $atleta->cpf }}">
+      </div>
+    </div>
+
+    <div class="mb-3 row">
+      <label for="sexo" class="col-sm-2 col-form-label">Sexo:</label>
+      <div class="col-sm-3">
+        <select name="sexo" class="form-control bg-dark text-light border-dark form-select" id="sexo">
           <option value="" disabled selected>Selecione</option>
-          <option value="1">Administrador</option>
-          <option value="0">Usuário</option>
+          <option value="Masculino" {{ $atleta->sexo == 'Masculino' ? 'selected="selected"' : '' }}>Masculino</option>
+          <option value="Feminino" {{ $atleta->sexo == 'Feminino' ? 'selected="selected"' : '' }}>Feminino</option>
         </select>
       </div>
     </div>
 
-    <div class="mb-3 row">
-      <label for="password" class="col-sm-2 col-form-label">Senha:</label>
-      <div class="col-sm-3">
-        <input type="password" class="form-control bg-dark text-light border-dark" id="password" name="password" placeholder="">
-      </div>
-    </div>
-
-    <div class="mb-3 row">
-      <label for="password_confirmation" class="col-sm-2 col-form-label">Confirmar senha:</label>
-      <div class="col-sm-3">
-        <input type="password" class="form-control bg-dark text-light border-dark" id="password_confirmation" name="password_confirmation" placeholder="">
-      </div>
-    </div>
-
     <div class="d-flex justify-content-end">
-      <button type="submit" class="btn btn-light">Cadastrar</button>
+      <button type="submit" class="btn btn-light">Confirmar Alterações</button>
     </div>
   </form>
+
 @endsection

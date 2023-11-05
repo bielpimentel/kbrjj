@@ -70,20 +70,16 @@
         Usuários
     </div>
 
-    <div class="collapse show" id="menu-usuario">
+    <div class="collapse" id="menu-usuario">
       <div class="bg-dark d-flex flex-column rounded mx-4 p-2 row-gap-1">
         <a href="/painel/users" class="submenu-link link-light text-decoration-none rounded p-2">
           <small class="d-flex justify-content-between align-items-center">
             Listagem
           </small>
         </a>
-        <a href="/painel/cadastro" class="submenu-link link-light text-decoration-none rounded p-2 active">
+        <a href="/painel/cadastro" class="submenu-link link-light text-decoration-none rounded p-2">
           <small class="d-flex justify-content-between align-items-center">
             Cadastrar
-            
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
-              <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
-            </svg>
           </small>
         </a>
       </div>
@@ -96,7 +92,7 @@
 
   {{-- cabeçalho --}}
   <div class="d-flex justify-content-between mb-4">
-    <h1 class="h3">Registrar usuário</h1>
+    <h1 class="h3">Atualizando dados de usuário: <span style="color: yellow">{{ $user->name }}</span></h1>
   </div>
 
   @if(session('msg'))
@@ -114,20 +110,21 @@
   @endif
 
   {{-- forms --}}
-  <form action="/painel/cadastro" method="POST" class="bg-custom rounded col-12 py-3 px-4">
+  <form action="/painel/edicao_user/{{ $user->id }}" method="POST" class="bg-custom rounded col-12 py-3 px-4">
 
     @csrf
+    @method('PUT')
     <div class="mb-3 row">
       <label for="name" class="col-sm-2 col-form-label">Nome:</label>
       <div class="col-sm-10">
-        <input type="text" class="form-control bg-dark text-light border-dark" id="name" name="name" placeholder="Nome do usuário">
+        <input type="text" class="form-control bg-dark text-light border-dark" id="name" name="name" value="{{$user->name}}" placeholder="Nome do usuário">
       </div>
     </div>
     
     <div class="mb-3 row">
       <label for="email" class="col-sm-2 col-form-label">E-mail:</label>
       <div class="col-sm-10">
-        <input type="text" class="form-control bg-dark text-light border-dark" id="email" name="email" placeholder="example@kbrtec.com.br">
+        <input type="text" class="form-control bg-dark text-light border-dark" id="email" name="email" placeholder="example@kbrtec.com.br" value="{{$user->email}}">
       </div>
     </div>
 
@@ -136,8 +133,8 @@
       <div class="col-sm-3">
         <select name="is_admin" class="form-control bg-dark text-light border-dark form-select" id="is_admin">
           <option value="" disabled selected>Selecione</option>
-          <option value="1">Administrador</option>
-          <option value="0">Usuário</option>
+          <option value="1" {{ $user->is_admin == 1 ? 'selected="selected"' : '' }}>Administrador</option>
+          <option value="0" {{ $user->is_admin == 0 ? 'selected="selected"' : '' }}>Usuário</option>
         </select>
       </div>
     </div>
@@ -145,14 +142,14 @@
     <div class="mb-3 row">
       <label for="password" class="col-sm-2 col-form-label">Senha:</label>
       <div class="col-sm-3">
-        <input type="password" class="form-control bg-dark text-light border-dark" id="password" name="password" placeholder="">
+        <input type="password" class="form-control bg-dark text-light border-dark" id="password" name="password" placeholder="********">
       </div>
     </div>
 
     <div class="mb-3 row">
       <label for="password_confirmation" class="col-sm-2 col-form-label">Confirmar senha:</label>
       <div class="col-sm-3">
-        <input type="password" class="form-control bg-dark text-light border-dark" id="password_confirmation" name="password_confirmation" placeholder="">
+        <input type="password" class="form-control bg-dark text-light border-dark" id="password_confirmation" name="password_confirmation" placeholder="********">
       </div>
     </div>
 

@@ -18,7 +18,7 @@ use App\Http\Controllers\AdmController;
 use App\Http\Controllers\PainelController;
 
 
-/* ---------- ÁREA PÚBLICA ---------- */
+/* ========================= ÁREA PÚBLICA ========================= */
 
 Route::get('/site/torneios', [TournamentController::class, 'torneios']);
 Route::get('/site/resultados', [TournamentController::class, 'resultados']);
@@ -29,7 +29,7 @@ Route::get('/site/chave_integra', [TournamentController::class, 'chave_integra']
 Route::get('/site/chave_listagem', [TournamentController::class, 'chave_listagem']); 
 Route::get('/', [TournamentController::class, 'index']);
 
-/* ---------- ÁREA ATLETA ---------- */
+/* ========================= ÁREA ATLETA ========================= */
 
 Route::get('/site/area_atleta/area_restrita', [TournamentController::class, 'restrita']);
 Route::get('/site/area_atleta/participacao', [TournamentController::class, 'participacao']);
@@ -37,8 +37,10 @@ Route::get('/site/area_atleta/vitoria', [TournamentController::class, 'vitoria']
 Route::get('/site/area_atleta/login', [TournamentController::class, 'login']);
 Route::get('/site/area_atleta/recuperar', [TournamentController::class, 'recuperar']);
 
-/* ---------- PAINEL ADM ---------- */
 
+/* ========================= PAINEL ADM ========================= */
+
+// ------------------------- TORNEIOS ------------------------- //
 Route::get('/painel/dashboard', [AdmController::class, 'dashboard'])->middleware('auth');
 Route::get('/painel/registro_torneio', [AdmController::class, 'cadastroTorneio'])->middleware('auth');
 Route::post('/painel/registro_torneio', [AdmController::class, 'store'])->middleware('auth');
@@ -46,9 +48,19 @@ Route::delete('/painel/dashboard/{id}', [AdmController::class, 'destroy'])->midd
 Route::get('/painel/edicao_torneio/{id}', [AdmController::class, 'edit'])->middleware('auth');
 Route::put('/painel/edicao_torneio/{id}', [AdmController::class, 'update'])->middleware('auth');
 Route::get('/painel/destaques', [AdmController::class, 'destaques'])->middleware('auth');
+// ------------------------- ATLETAS ------------------------- //
 Route::get('/painel/atletas', [AdmController::class, 'listaAtletas'])->middleware('auth');
+Route::get('/painel/atletas/{id}', [AdmController::class, 'listaAtletas'])->middleware('auth');
+Route::delete('/painel/atletas/{id}', [AdmController::class, 'destroyAtleta'])->middleware('auth');
+Route::get('/painel/edicao_atleta/{id}', [AdmController::class, 'editAtleta'])->middleware('auth');
+Route::put('/painel/edicao_atleta/{id}', [AdmController::class, 'updateAtleta'])->middleware('auth');
+// ------------------------- USUÁRIOS ------------------------- //
 Route::get('/painel/users', [AdmController::class, 'users'])->middleware('auth');
 Route::get('/painel/cadastro', [AdmController::class, 'cadastroUser'])->middleware('auth');
+Route::post('/painel/cadastro', [AdmController::class, 'storeUser'])->middleware('auth');
+Route::get('/painel/edicao_user/{id}', [AdmController::class, 'editUser'])->middleware('auth');
+Route::put('/painel/edicao_user/{id}', [AdmController::class, 'updateUser'])->middleware('auth');
+Route::delete('/painel/users/{id}', [AdmController::class, 'destroyUser'])->middleware('auth');
 Route::post('/logout', [PainelController::class, 'deslogarPainel'])->name('logout');
 Route::get('/logout', [PainelController::class, 'getLogout']);
 

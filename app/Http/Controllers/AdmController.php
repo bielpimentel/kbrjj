@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Torneio;
 use App\Models\Atleta;
+use App\Models\User;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Auth;
 use Intervention\Image\ImageManagerStatic as Image;
@@ -191,16 +192,116 @@ class AdmController extends Controller
         return view('painel.lista-atletas', ['atletas' => $dadosAtleta]);
     }
 
+    public function editAtleta($id){
+
+        $atleta = Atleta::findOrFail($id);
+
+        return view('painel.edita-atleta', ['atleta' => $atleta]);
+    }
+
+    public function updateAtleta(Request $request){
+
+        $atualiza = $request->all();
+
+        Atleta::findOrFail($request->id)->update($atualiza);
+
+        return redirect('/painel/atletas')->with('msg', 'Registro de atleta atualizado!');
+    }
+
+    public function destroyAtleta($id) {
+
+        Atleta::findOrFail($id)->delete();
+
+        return redirect('/painel/atletas/{id}')->with('msg', 'Registro de atleta removido!');
+
+    }
+
+
     // ---------- USUÁRIOS ---------- //
     public function users(){
 
-        return view('painel.users');
+        $name = request('name');
+        $email = request('email');
+
+        $query = User::query();
+
+        if($name || $email){
+            
+            $query->where('name', 'LIKE', "%{$name}%");
+            $query->where('email', 'LIKE', "%{$email}%");
+            
+        }
+        
+        $dadosUsers = $query->paginate(4);
+
+        return view('painel.users', ['users' => $dadosUsers]);
     }
 
     public function cadastroUser(){
 
-
         return view('painel.cadastro-users');
+    }
+
+    public function storeUser(Request $request){
+
+        $request = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users',
+            'is_admin' => 'required|boolean',
+            'password' => 'required|string|min:8|confirmed',
+        ]);
+    
+        User::create([
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'is_admin' => $request['is_admin'],
+            'password' => bcrypt($request['password']),
+        ]);
+
+        return redirect('/painel/users')->with('msg', 'Usuário cadastrado com sucesso!');
+    }
+
+    public function editUser($id){
+
+        $user = User::findOrFail($id);
+
+        return view('painel.edita-user', ['user' => $user]);
+    }
+
+    public function updateUser(Request $request){
+
+        $dadosAntigos = User::findOrFail($request->id);
+
+        if ($dadosAntigos->email == $request->email) {
+            $atualiza = $request->validate([
+                'name' => 'required|string|max:255',
+                'is_admin' => 'required|boolean',
+            ]);
+        } else {
+            $atualiza = $request->validate([
+                'name' => 'required|string|max:255',
+                'email' => 'required|email|unique:users,email,',
+                'is_admin' => 'required|boolean',
+            ]);
+        }
+
+        if ($request->filled('password')) {
+            
+            $atualiza['password'] = 'required|string|min:8|confirmed';
+            $atualiza['password'] = bcrypt($atualiza['password']);
+        }
+
+        $dadosAntigos->update($atualiza);
+
+        return redirect('/painel/users')->with('msg', 'Registro de usuário atualizado!');
+    }
+
+    public function destroyUser($id) {
+
+        User::findOrFail($id)->delete();
+
+        return redirect('/painel/users')->with('msg', 'Registro de usuário removido!');
+
     }
 
 }

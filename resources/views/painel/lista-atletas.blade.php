@@ -200,7 +200,7 @@
       <div class="modal-dialog modal-dialog-centered text-light">
         <div class="modal-content bg-custom">
           <div class="modal-header">
-            <h1 class="modal-title fs-5" id="exampleModalLabel">{{ $atleta->titulo }}</h1>
+            <h1 class="modal-title fs-5" id="exampleModalLabel">{{ $atleta->nome }}</h1>
             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body d-flex flex-wrap row-gap-4">
