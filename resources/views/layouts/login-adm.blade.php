@@ -12,6 +12,7 @@
 </head>
 
 <body class="bg-dark">
+  
   <main class="py-5" style="min-height: calc(100vh - 72px);">
     <div class="container">
       
@@ -19,7 +20,9 @@
 
       <div class="bg-custom mx-auto row col-8 rounded shadow-sm overflow-hidden">
         <div class="col-6 bg-white p-5 d-flex align-items-center justify-content-center">
+          <a href="/">
             <img src="img/kbrtec.webp" alt="KBRTEC" height="200" width="200" class="object-fit-contain">
+          </a>
         </div>
 
         <div class="col-6 d-flex align-items-center p-5">

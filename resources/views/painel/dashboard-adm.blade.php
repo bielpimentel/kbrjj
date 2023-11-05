@@ -107,7 +107,7 @@
   </div>
 
   @if(session('msg'))
-    <div class="msgErro">
+    <div class="msgSucesso">
       <p>{{ session('msg') }}</p>
     </div>
   @endif

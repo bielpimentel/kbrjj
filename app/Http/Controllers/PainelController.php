@@ -19,6 +19,6 @@ class PainelController extends Controller
 
     public function getLogout(){
         
-        return redirect('/login');
+        return redirect('/');
     }
 }

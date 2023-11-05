@@ -16,7 +16,9 @@
         <div class="container-fluid">
             <div class="row">
                 <div style="width: 250px;">
-                    <img src="/img/kbrtec.webp" alt="KBRTEC" height="60" width="150" class="object-fit-contain">
+                    <a href="/">
+                        <img src="/img/kbrtec.webp" alt="KBRTEC" height="60" width="150" class="object-fit-contain">
+                    </a>
                 </div>
 
                 <div class="col dropdown d-flex align-items-center justify-content-end">

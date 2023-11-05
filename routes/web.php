@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\TournamentController;
 use App\Http\Controllers\AdmController;
+use App\Http\Controllers\CertificateController;
 use App\Http\Controllers\PainelController;
 
 
@@ -31,11 +32,11 @@ Route::get('/', [TournamentController::class, 'index']);
 
 /* ========================= ÁREA ATLETA ========================= */
 
-Route::get('/site/area_atleta/area_restrita', [TournamentController::class, 'restrita']);
-Route::get('/site/area_atleta/participacao', [TournamentController::class, 'participacao']);
-Route::get('/site/area_atleta/vitoria', [TournamentController::class, 'vitoria']);
-Route::get('/site/area_atleta/login', [TournamentController::class, 'login']);
-Route::get('/site/area_atleta/recuperar', [TournamentController::class, 'recuperar']);
+Route::get('/area_atleta', [CertificateController::class, 'certificados'])->middleware(['auth', 'atleta']);
+Route::get('/area_atleta/participacao', [CertificateController::class, 'participacao']);
+Route::get('/area_atleta/vitoria', [CertificateController::class, 'vitoria']);
+Route::get('/area_atleta/login', [CertificateController::class, 'login']);
+Route::get('/area_atleta/recuperar', [CertificateController::class, 'recuperar']);
 
 
 /* ========================= PAINEL ADM ========================= */
@@ -61,6 +62,8 @@ Route::post('/painel/cadastro', [AdmController::class, 'storeUser'])->middleware
 Route::get('/painel/edicao_user/{id}', [AdmController::class, 'editUser'])->middleware('auth');
 Route::put('/painel/edicao_user/{id}', [AdmController::class, 'updateUser'])->middleware('auth');
 Route::delete('/painel/users/{id}', [AdmController::class, 'destroyUser'])->middleware('auth');
+
+
 Route::post('/logout', [PainelController::class, 'deslogarPainel'])->name('logout');
 Route::get('/logout', [PainelController::class, 'getLogout']);
 
