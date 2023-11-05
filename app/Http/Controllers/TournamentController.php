@@ -86,9 +86,9 @@ class TournamentController extends Controller
         Torneio::findOrFail($id);
 
         $request->validate([
-            'nome' => 'required',
+            'nome' => 'required|string',
             'nascimento' => 'required|before:today',
-            'cpf' => 'required',
+            'cpf' => 'required|string|max:14|min:14|unique:atletas,cpf',
             'sexo' => 'required',
             'equipe' => 'required',
             'faixa' => 'required',
@@ -120,7 +120,7 @@ class TournamentController extends Controller
         } else {
             
             $request->validate([
-                'cpf' => 'unique:atletas,cpf',
+                'cpf' => 'required|string|max:14|min:14|unique:atletas,cpf',
                 ], [
                 'cpf.unique' => 'CPF já cadastrado como atleta!'
             ]);

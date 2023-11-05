@@ -146,6 +146,27 @@ class AdmController extends Controller
 
     public function update(Request $request){
 
+        $alteracao = Torneio::findOrFail($request->id);
+
+        if (
+            $alteracao->titulo != $request->titulo || 
+            $alteracao->cidade != $request->cidade || 
+            $alteracao->estado != $request->estado || 
+            $alteracao->ginasio != $request->ginasio || 
+            $alteracao->data != $request->data
+            ){
+            $query = Torneio::where('titulo', $request->titulo)
+                ->where('cidade', $request->cidade)
+                ->where('estado', $request->estado)
+                ->where('ginasio', $request->ginasio)
+                ->where('data', $request->data)
+                ->first();
+
+            if ($query){
+                return redirect()->back()->with('msg', 'Este torneio já está registrado!');
+            }
+        }
+
         $torneio = Torneio::findOrFail($request->id);
         $atualiza = $request->all();
 
@@ -211,7 +232,7 @@ class AdmController extends Controller
         
         if ($request->filled('cpf')) {
             
-            $atualiza['cpf'] = 'required|string|max:14|unique:users,cpf';
+            $atualiza['cpf'] = 'required|string|max:14|min:14|unique:users,cpf';
         }
 
         if ($request->filled('email')) {
