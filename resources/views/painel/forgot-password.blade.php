@@ -27,7 +27,7 @@
       </div>
 
       <div class="col-12 mt-3 d-flex gap-2 align-items-center justify-content-between">
-        <button type="submit" class="btn btn-light">Resetar senha</button>
+        <button type="button" class="btn btn-light">Resetar senha</button>
 
         <a href="login" class="link-light">Voltar</a>
       </div>

@@ -26,7 +26,7 @@ Route::group(['middleware' => config('jetstream.middleware', ['web'])], function
 
     Route::group(['middleware' => array_values(array_filter([$authMiddleware, $authSessionMiddleware]))], function () {
         // User & Profile...
-        Route::get('/user/kbr', [UserProfileController::class, 'show'])->name('profile.show');
+        Route::get('/painel/dashboard', [UserProfileController::class, 'show'])->name('profile.show');
 
         Route::group(['middleware' => 'verified'], function () {
             // API...
