@@ -201,7 +201,29 @@ class AdmController extends Controller
 
     public function updateAtleta(Request $request){
 
-        $atualiza = $request->all();
+        $atualiza = $request->validate([
+            'nome' => 'required|string|max:255',
+            'nascimento' => 'required|before:today',
+            'equipe' => 'required|max:255',
+            'sexo' => 'required',
+        ]);
+
+        
+        if ($request->filled('cpf')) {
+            
+            $atualiza['cpf'] = 'required|string|max:14|unique:users,cpf';
+        }
+
+        if ($request->filled('email')) {
+            
+            $atualiza['email'] = 'required|string|max:255|unique:users,email';
+        }
+
+        if ($request->filled('senha')) {
+            
+            $atualiza['senha'] = 'required|string|min:8|confirmed';
+            $atualiza['senha'] = bcrypt($atualiza['senha']);
+        }
 
         Atleta::findOrFail($request->id)->update($atualiza);
 
