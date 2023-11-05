@@ -5,6 +5,21 @@
 @section('content')
 
   {{-- BANNER E INFOS DO TORNEIO --}}
+      @if(session('msg'))
+        <div style="text-align: center; margin: 20px auto; max-width: 450px" class="bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded relative" role="alert">
+          <strong class="font-bold">Erro ao processar a sua solicitação!</strong>
+          <li>{{ session('msg') }}</li>
+        </div>
+      @endif
+
+      @if($errors->any())
+        <div style="text-align: center; margin: 20px auto; max-width: 450px" class="bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded relative" role="alert">
+          <strong class="font-bold">Erro ao processar a sua solicitação!</strong>
+            @foreach($errors->all() as $error)
+              <li>{{ $error }}</li>
+            @endforeach
+        </div>
+      @endif
   <section class="relative h-[300px]">
     <img
       src="/imgs/torneios/{{ $torneio->imagem }}"
@@ -104,22 +119,6 @@
   <main class="max-w-7xl mx-2 lg:mx-auto">
     
     <form action="/site/inscricao/{{$torneio->id}}" method="POST" class="py-12">
-
-      @if(session('msg'))
-        <div style="text-align: center; margin: 0 auto; max-width: 450px" class="bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded relative" role="alert">
-          <strong class="font-bold">Erro ao processar a sua solicitação!</strong>
-          <li>{{ session('msg') }}</li>
-        </div>
-      @endif
-      
-      @if($errors->any())
-        <div style="text-align: center; margin: 0 auto; max-width: 450px" class="bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded relative" role="alert">
-          <strong class="font-bold">Erro ao processar a sua solicitação!</strong>
-            @foreach($errors->all() as $error)
-              <li>{{ $error }}</li>
-            @endforeach
-        </div>
-      @endif
       
       @csrf
       <h2 class="text-center text-3xl text-blue-700 mt-4 mb-8">

@@ -15,6 +15,14 @@
   class="max-w-7xl mx-2 lg:mx-auto text-gray-900"
   x-data="{active:'sobre_evento'}"
   >
+
+      @if(session('msg'))
+        <div style="text-align: center; margin: 20px auto; max-width: 450px" class="bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded relative" role="alert">
+          <strong class="font-bold">Erro ao processar a sua solicitação!</strong>
+          <li>{{ session('msg') }}</li>
+        </div>
+      @endif
+
     <img
       src="/imgs/torneios/{{ $torneios->imagem }}"
       alt="{{ $torneios->imagem }}"

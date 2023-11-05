@@ -140,7 +140,7 @@ class TournamentController extends Controller
     
         $atletaCadastrado->torneios()->attach($id);
     
-        return redirect('/')->with('msg', 'Inscrição realizada com sucesso! Acesse a área do competidor para saber mais detalhes');
+        return redirect('/')->with('ok', 'Inscrição realizada com sucesso! Acesse a área do competidor para saber mais detalhes');
     }
 
     public function chave_integra(){
