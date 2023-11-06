@@ -70,8 +70,8 @@ class AdmController extends Controller
         }
 
         $request->validate([
-            'titulo' => 'required',
-            'cidade' => 'required',
+            'titulo' => 'required|max:255',
+            'cidade' => 'required|max:255',
             'estado' => 'required',
             'data' => 'required|after:today',
             'sobre' => 'required',
@@ -227,6 +227,8 @@ class AdmController extends Controller
             'nascimento' => 'required|before:today',
             'equipe' => 'required|max:255',
             'sexo' => 'required',
+            'faixa' => 'required',
+            'peso' => 'required',
         ]);
 
         
@@ -242,7 +244,7 @@ class AdmController extends Controller
 
         if ($request->filled('senha')) {
             
-            $atualiza['senha'] = 'required|string|min:8|confirmed';
+            $atualiza['senha'] = 'required|string|max:255|min:8|confirmed';
             $atualiza['senha'] = bcrypt($atualiza['senha']);
         }
 
@@ -289,9 +291,9 @@ class AdmController extends Controller
 
         $request = $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users',
+            'email' => 'required|email|max:255|unique:users',
             'is_admin' => 'required|boolean',
-            'password' => 'required|string|min:8|confirmed',
+            'password' => 'required|string|max:255|min:8|confirmed',
         ]);
     
         User::create([
@@ -323,14 +325,14 @@ class AdmController extends Controller
         } else {
             $atualiza = $request->validate([
                 'name' => 'required|string|max:255',
-                'email' => 'required|email|unique:users,email,',
+                'email' => 'required|email|max:255|unique:users,email,',
                 'is_admin' => 'required|boolean',
             ]);
         }
 
         if ($request->filled('password')) {
             
-            $atualiza['password'] = 'required|string|min:8|confirmed';
+            $atualiza['password'] = 'required|string|max:255|min:8|confirmed';
             $atualiza['password'] = bcrypt($atualiza['password']);
         }
 

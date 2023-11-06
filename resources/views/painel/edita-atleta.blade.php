@@ -143,6 +143,28 @@
       </div>
     </div>
 
+    <div class="mb-3 row">
+      <label for="faixa" class="col-sm-2 col-form-label">Faixa:</label>
+      <div class="col-sm-3">
+        <select name="faixa" class="form-control bg-dark text-light border-dark form-select" id="faixa">
+          <option value="" disabled selected>Selecione</option>
+          <option value="Marrom" {{ $atleta->faixa == 'Marrom' ? 'selected="selected"' : '' }}>Marrom</option>
+          <option value="Preta" {{ $atleta->faixa == 'Preta' ? 'selected="selected"' : '' }}>Preta</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="mb-3 row">
+      <label for="peso" class="col-sm-2 col-form-label">Peso:</label>
+      <div class="col-sm-3">
+        <select name="peso" class="form-control bg-dark text-light border-dark form-select" id="peso">
+          <option value="" disabled selected>Selecione</option>
+          <option value="Pesado" {{ $atleta->peso == 'Pesado' ? 'selected="selected"' : '' }}>Pesado</option>
+          <option value="Leve" {{ $atleta->peso == 'Leve' ? 'selected="selected"' : '' }}>Leve</option>
+        </select>
+      </div>
+    </div>
+
     <div class="d-flex justify-content-end">
       <button type="submit" class="btn btn-light">Confirmar Alterações</button>
     </div>

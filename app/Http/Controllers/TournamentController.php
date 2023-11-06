@@ -86,11 +86,11 @@ class TournamentController extends Controller
         Torneio::findOrFail($id);
 
         $request->validate([
-            'nome' => 'required|string',
+            'nome' => 'required|string|max:255',
             'nascimento' => 'required|before:today',
             'cpf' => 'required|string|max:14|min:14|unique:atletas,cpf',
             'sexo' => 'required',
-            'equipe' => 'required',
+            'equipe' => 'required|max:255',
             'faixa' => 'required',
             'peso' => 'required',
             ], [
@@ -133,6 +133,8 @@ class TournamentController extends Controller
             $atleta->email = $userEmail;
             $atleta->senha = $userPassword;
             $atleta->equipe = $request->equipe;
+            $atleta->faixa = $request->faixa;
+            $atleta->peso = $request->peso;
             $atleta->save();
             
             $atletaCadastrado = $atleta;

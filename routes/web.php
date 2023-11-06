@@ -93,4 +93,4 @@ Route::middleware([
     Route::get('/painel/destaques', [AdmController::class, 'destaques'])->middleware('can:admin');
 });
 
-require_once __DIR__ . '/loginKbr.php';
+// require_once __DIR__ . '/loginKbr.php';
