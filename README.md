@@ -1,66 +1,65 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Avaliação técnica KBR Tec - Analista Desenvolvedor Back-end Junior #
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Projeto realizado como teste para vaga mencionada no título, tendo como tema o desenvolvimento de sistema de registro e gerenciamento de torneios de Brazilian Jiu Jitsu e inscrição de atletas.
 
-## About Laravel
+## Tarefas propostas e checklist ##
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### Integralmente Realizadas ###
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+1. Exibição dos Campeonatos
+    1.2. Home: Listagem das 8 demais competições
+    1.3. Listagem interna dos campeonatos
+    1.4. Filtros de busca na página de listagem
+    1.5. Paginação de registros
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+2. Íntegra dos Campeonatos
+   2.1. Exibição dinâmica dos dados
+   2.2. URL amigável da página de íntegra do campeonato
+   2.3. Exibição do botão correto correspondente à atual fase do campeonato
 
-## Learning Laravel
+3. Fase: Inscrições Abertas
+   3.1. Programação do formulário de inscrição do atleta
+   3.2. Validação e consistência de campos
+   3.5. Bloqueios e validações necessárias para que só apareçam informações desta fase quando estiver ativa
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+6. Área do Atleta
+   6.1. Autenticação completa da área restrita
+   6.2. Recuperação de senha
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+7. Módulo de Autenticação
+   7.1. Autenticação completa do painel administrativo
+   7.2. Recuperação de senha
+   7.3. CRUD usuários
+   7.4. Módulo de usuários com 2 diferentes níveis de acesso (admin e user)
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+8. CRUD Campeonatos
+   8.1. Cadastro, alteração, listagem e exclusão de campeonatos
 
-## Laravel Sponsors
+9. Fase dos Campeonatos
+   9.1. Seleção da fase atual de cada campeonato
+   9.2. Programação da fase de inscrições abertas
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+### Parcialmente Realizadas ####
 
-### Premium Partners
+6. Área do Atleta
+   6.3. Listagem de todos os certificados do próprio atleta (SEM DETALHES INTERNOS)
+   6.4. Exibição do certificado de participação ou de vitória (SEM DETALHES INTERNOS)
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+8. CRUD Campeonatos
+   8.2. Imagem do campeonato: inserir recurso de cortar imagem (INSERÇÃO SEM RECURSO DE RECORTE)
 
-## Contributing
+9. Fase dos Campeonatos
+   9.4. Programação da fase de resultados (APENAS LIBERAÇÃO DE CERTIFICADOS NA ÁREA DO USUÁRIO, SEM DETALHES INTERNOS)
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+10. Atletas
+    10.1. Inscrições: listagem das inscrições dos atletas com os filtros solicitados e paginação (SEM DETALHES DO CAMPEONATO INSCRITO)
 
-## Code of Conduct
+## Detalhes dos Bancos de Dados ##
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Todas as tabelas estão preparadas para serem rodadas pelas migrations do Laravel, porém sem Seeders.
 
-## Security Vulnerabilities
+Cadastro de usuário tem como padrão o valor FALSE (0) para a coluna "is_admin". Para obter privilégios, basta a alteração manual na tabela para incluir valor TRUE (1) na coluna em questão.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## Link do Painel Administrativo ##
 
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+<endereço>/painel/dashboard
